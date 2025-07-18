@@ -77,7 +77,7 @@ export default function HistoryPageClient() {
                 <Card key={index} className="w-full rounded-xl shadow-md">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-lg">Scan on {formatTimestamp(entry.timestamp)}</CardTitle>
-                    <CardDescription>Detected ID'd and their matches.</CardDescription>
+                    <CardDescription>Detected ID's and their matches.</CardDescription>
                   </CardHeader>
                   <CardContent className="p-4 pt-0">
                     {!entry.results || entry.results.length === 0 ? (
