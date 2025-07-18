@@ -1,34 +1,15 @@
 "use client"
-
-import type React from "react"
-
-import { useState } from "react"
+import { useActionState } from "react" // Import useActionState
 import { useRouter } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { login } from "@/app/actions/auth" // Import the login server action
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
+  const [state, formAction] = useActionState(login, { message: "" }) // Use useActionState
   const router = useRouter()
-
-  // Get credentials from env if they exist, fallback to default
-  const ADMIN_USERNAME = process.env.NEXT_PUBLIC_ADMIN_USERNAME || "admin"
-  const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || "password"
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-
-    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-      router.push("/admin")
-    } else {
-      setError("Invalid username or password.")
-    }
-  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
@@ -38,15 +19,16 @@ export default function LoginPage() {
           <CardDescription>Enter admin credentials.</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleLogin} className="grid gap-4">
+          <form action={formAction} className="grid gap-4">
+            {" "}
+            {/* Use formAction */}
             <div className="grid gap-2">
               <Label htmlFor="username">Username</Label>
               <Input
                 id="username"
                 type="text"
+                name="username" // Add name attribute
                 placeholder="admin"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </div>
@@ -55,13 +37,13 @@ export default function LoginPage() {
               <Input
                 id="password"
                 type="password"
+                name="password" // Add name attribute
                 placeholder="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
-            {error && <p className="text-sm text-red-500 text-center">{error}</p>}
+            {state?.message && <p className="text-sm text-red-500 text-center">{state.message}</p>}{" "}
+            {/* Display message from state */}
             <Button type="submit" className="w-full">
               Login
             </Button>
