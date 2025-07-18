@@ -15,16 +15,15 @@ export default function LoginPage() {
   const [error, setError] = useState("")
   const router = useRouter()
 
+  // Get credentials from env if they exist, fallback to default
+  const ADMIN_USERNAME = process.env.NEXT_PUBLIC_ADMIN_USERNAME || "admin"
+  const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || "password"
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
 
-    // Hardcoded admin credentials
-    const ADMIN_USERNAME = "admin"
-    const ADMIN_PASSWORD = "password"
-
     if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-      // In a real app, you'd set a session cookie or token here
       router.push("/admin")
     } else {
       setError("Invalid username or password.")
