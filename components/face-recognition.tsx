@@ -255,7 +255,7 @@ export default function FaceRecognitionComponent() {
         const faceApiLabeledDescriptors = labeledDescriptors.map(
           (ld) => new faceapi.LabeledFaceDescriptors(ld.label, ld.descriptors),
         )
-        const faceMatcher = new faceapi.FaceMatcher(faceApiLabeledDescriptors, 0.6)
+        const faceMatcher = new faceapi.FaceMatcher(faceApiLabeledDescriptors, 0.45)
         const results = detections.map((d) => faceMatcher.findBestMatch(d.descriptor))
 
         const newMatchResults = results.map((match) => ({
