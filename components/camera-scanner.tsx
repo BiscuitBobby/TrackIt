@@ -190,7 +190,7 @@ export default function CameraScanner() {
           const faceApiLabeledDescriptors = labeledDescriptors.map(
             (ld) => new currentFaceApi.LabeledFaceDescriptors(ld.label, ld.descriptors),
           )
-          const faceMatcher = new currentFaceApi.FaceMatcher(faceApiLabeledDescriptors, 0.6)
+          const faceMatcher = new currentFaceApi.FaceMatcher(faceApiLabeledDescriptors, 0.45)
           const results = detections.map((d) => faceMatcher.findBestMatch(d.descriptor))
 
           const newMatchResults: MatchResult[] = results.map((match) => {
